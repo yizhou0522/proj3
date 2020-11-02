@@ -13,10 +13,11 @@
 // #define INC_537MAKE_OPTION_PARSER_H
 // #include"option_parser.h"
 // #endif //INC_537MAKE_OPTION_PARSER_H
-#ifndef PROJECT_NODE_H
-#define PROJECT_NODE_H
-#include "linked_list.h"
+#ifndef INC_537MAKE_VALIDATOR_H
+#define INC_537MAKE_VALIDATOR_H
+#include "validator.h"
 #endif
+
 
 // #ifndef INC_537MAKE_CONSTANTS_H
 // #define INC_537MAKE_CONSTANTS_H

@@ -15,3 +15,14 @@ void validateTarget(char *line, unsigned int size, int lineNo);
 char *stripWhiteSpace(char *str);
 
 void validateCommands(char *line, unsigned int size, int lineNo);
+
+typedef struct llnode {
+    char* element;
+    struct llnode* next;
+} linked_list_node;
+
+linked_list_node *createLLNode(char *element);
+
+void appendToLL(linked_list_node *node, char *element);
+
+linked_list_node *getElement(linked_list_node *node, int index);
