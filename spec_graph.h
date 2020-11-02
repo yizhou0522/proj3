@@ -3,22 +3,9 @@
 // Co-author Anshu Verma
 //
 
-#ifndef INC_537MAKE_GRAPHNODE_H
-#define INC_537MAKE_GRAPHNODE_H
 
-#endif //INC_537MAKE_GRAPHNODE_H
-
-
-#ifndef INC_537MAKE_VALIDATOR_H
-#define INC_537MAKE_VALIDATOR_H
 #include "spec_repr.h"
-#endif
 
-
-// #ifndef INC_537MAKE_CONSTANTS_H
-// #define INC_537MAKE_CONSTANTS_H
-// #include "constants.h"
-// #endif
 
 typedef struct graphNode {
     char* element;
