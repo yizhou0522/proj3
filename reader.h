@@ -39,5 +39,4 @@
 // #endif
 
 void reader(struct_input unprocessedInput);
-struct_input parse_and_get_unprocessed_input(int argc, char **argv);
 

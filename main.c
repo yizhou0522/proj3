@@ -5,7 +5,6 @@
 #include <stdbool.h>
 #include <unistd.h>
 #include "reader.h"
-// #include "option_parser.h"
 
 int main(int argc, char *argv[]) {
 
