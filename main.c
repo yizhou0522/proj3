@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
     bool fileFind = false;
     int option;
 
-    struct_input input = init_input();
+    input ip = init_input();
 
     while ((option = getopt(argc, argv, "f:")) != -1) {
 
@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
 
             case 'f':
                 if(fileFind){
-                    input.make_file_name = optarg;
+                    ip.make_file_name = optarg;
                 }
                 break;
 
@@ -38,13 +38,12 @@ int main(int argc, char *argv[]) {
 
         int j =0;
         for (; i < argc; ++i) {
-            input.targets_to_build[j] = argv[i];
+            ip.targets_to_build[j] = argv[i];
             j++;
         }
-        input.targets_to_build[j] = NULL;
+        ip.targets_to_build[j] = NULL;
     }
 
-    // struct_input unprocessedInput = parse_and_get_unprocessed_input(argc, argv);
-    parser(input);
+    parser(ip);
 
 }

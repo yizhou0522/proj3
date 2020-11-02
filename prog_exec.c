@@ -18,20 +18,20 @@
 
 #define MAX 2048
 
-bool traverseAndExecute(graph_node* root) {
+bool processGraph(graph_node* root) {
 
     if (root->children[0] == NULL) {
-        return executeNodeCommands(root);
+        return processNode(root);
     }
 
     for (unsigned int i = 0; i < MAX; ++i) {
         if (root->children[i] == NULL) {
             break;
         }
-        traverseAndExecute(root->children[i]);
+        processGraph(root->children[i]);
     }
 
-    return executeNodeCommands(root);
+    return processNode(root);
 }
 
 bool isLHSLessThanRHS(struct timespec lhs, struct timespec rhs) {
@@ -88,7 +88,7 @@ bool commandExecutionRequired(graph_node* root) {
     return true;
 }
 
-bool executeNodeCommands(graph_node* root) {
+bool processNode(graph_node* root) {
 
     if(commandExecutionRequired(root)) {
         dep_node* temphead = root->commands;

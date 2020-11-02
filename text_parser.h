@@ -3,10 +3,10 @@
 // Co-author Arpit Jain
 //
 
-#ifndef INC_537MAKE_READER_H
-#define INC_537MAKE_READER_H
+#ifndef PARSER_H
+#define PARSER_H
 
-#endif //INC_537MAKE_READER_H
+#endif 
 
 #ifndef INC_537MAKE_GRAPHNODE_H
 #define INC_537MAKE_GRAPHNODE_H
@@ -18,5 +18,5 @@
 #include "prog_exec.h"
 #endif
 
-void parser(struct_input unprocessedInput);
+void parser(input unprocessedInput);
 

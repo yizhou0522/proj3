@@ -8,7 +8,7 @@
 #define MAX 2048
 
 
-void parser(struct_input unprocessedInput) {
+void parser(input unprocessedInput) {
     FILE *file_pointer;
     char *line = (char *) malloc(MAX * sizeof(char));
 
@@ -144,8 +144,8 @@ void parser(struct_input unprocessedInput) {
         exit(1);
     }
 
-    createConnections(graph, curNode);
-    int cycleExist = is_cycle_found(curNode, graph);
+    constructGraph(graph, curNode);
+    int cycleExist = isCycle(curNode, graph);
 
     if (cycleExist) {
         fprintf(stderr, "\n <Cycle detected>: Exit the program.\n");
@@ -153,7 +153,7 @@ void parser(struct_input unprocessedInput) {
     }
 
     if(unprocessedInput.targets_to_build[0] == NULL){
-        bool processed = traverseAndExecute(graph[0]);
+        bool processed = processGraph(graph[0]);
         if (!processed) {
             printf("537make: '%s' is up to date.\n", graph[0]->element);
         }
@@ -166,7 +166,7 @@ void parser(struct_input unprocessedInput) {
             for (unsigned int i = 0; i < curNode; i++) {
                 if (strcmp(graph[i]->element, unprocessedInput.targets_to_build[x]) == 0) {
                     targetFound = 1;
-                    bool processed = traverseAndExecute(graph[i]);
+                    bool processed = processGraph(graph[i]);
                     if (!processed) {
                         printf("537make: '%s' is up to date.\n", graph[i]->element);
                     }

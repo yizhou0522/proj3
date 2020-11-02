@@ -21,8 +21,6 @@
 // #endif
 
 typedef struct graphNode {
-
-    //TODO: Change it to target name
     char* element;
     int nodeNo;
     dep_node* dependencies;
@@ -32,16 +30,16 @@ typedef struct graphNode {
 
 graph_node* createGraphNode(char *element, dep_node* dependencies, dep_node* commands);
 
-graph_node* createConnections(graph_node* graphArray[], unsigned int size);
+graph_node* constructGraph(graph_node* graphArray[], unsigned int size);
 
-int is_cycle_found(unsigned int size, graph_node *graphNodeArray[]);
+int isCycle(unsigned int size, graph_node *graphNodeArray[]);
 
-typedef struct struct_input {
+typedef struct input {
 
     char* make_file_name;
     char** targets_to_build;
 
-} struct_input;
+} input;
 
-struct_input init_input();
+input init_input();
 

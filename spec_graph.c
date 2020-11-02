@@ -28,7 +28,7 @@ dep_node* commands) {
     return graphNode;
 }
 
-graph_node* createConnections(graph_node* graphArray[], unsigned int size){
+graph_node* constructGraph(graph_node* graphArray[], unsigned int size){
     graph_node *root = NULL;
 
     for(unsigned int i = 0;i<size;i++){
@@ -86,7 +86,7 @@ int cyclic_util(int nodeNo, int visited[], int stack[], graph_node *graphNodeArr
     return 0;
 }
 
-int is_cycle_found(unsigned int graphSize, graph_node *graphNodeArray[]){
+int isCycle(unsigned int graphSize, graph_node *graphNodeArray[]){
 
     int visited[graphSize];
     int stack[graphSize];
@@ -105,9 +105,9 @@ int is_cycle_found(unsigned int graphSize, graph_node *graphNodeArray[]){
     return 0;
 }
 
-struct_input init_input() {
+input init_input() {
 
-    struct_input defaultInputArg;
+    input defaultInputArg;
     defaultInputArg.make_file_name = NULL;
     defaultInputArg.targets_to_build = (char **) malloc(MAX * sizeof(char *));
     defaultInputArg.targets_to_build[0] = NULL;

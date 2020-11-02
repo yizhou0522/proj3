@@ -16,6 +16,6 @@
 #endif //INC_537MAKE_GRAPHNODE_H
 
 
-bool traverseAndExecute(graph_node* root);
+bool processGraph(graph_node* root);
 
-bool executeNodeCommands(graph_node* root);
+bool processNode(graph_node* root);
