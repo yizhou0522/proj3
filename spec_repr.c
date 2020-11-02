@@ -5,7 +5,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "validator.h"
+#include "spec_repr.h"
 #define MAX_SIZE 2048
 
 linked_list_node *createLLNode(char *element) {

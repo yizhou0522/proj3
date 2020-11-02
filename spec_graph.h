@@ -11,7 +11,7 @@
 
 #ifndef INC_537MAKE_VALIDATOR_H
 #define INC_537MAKE_VALIDATOR_H
-#include "validator.h"
+#include "spec_repr.h"
 #endif
 
 
