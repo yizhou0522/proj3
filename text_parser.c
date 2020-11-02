@@ -14,7 +14,7 @@ void reader(struct_input unprocessedInput) {
 
     if (line == NULL) {
         fprintf(stderr, "Reader input buffer allocation of memory failed.");
-        exit(EXIT_FAILURE);
+        exit(1);
     }
 
     graph_node *graph[MAX_SIZE];
@@ -22,7 +22,7 @@ void reader(struct_input unprocessedInput) {
         file_pointer = fopen(unprocessedInput.make_file_name, "r");
         if(!file_pointer){
             fprintf(stderr, "Failed to find %s", unprocessedInput.make_file_name);
-            exit(EXIT_FAILURE);
+            exit(1);
         }
     } else {
 
@@ -34,7 +34,7 @@ void reader(struct_input unprocessedInput) {
             // If this also fails then throw error
             if (!file_pointer) {
                 fprintf(stderr, "Both makefile and Makefile do not exist");
-                exit(EXIT_FAILURE);
+                exit(1);
             }
         }
     }
@@ -50,16 +50,16 @@ void reader(struct_input unprocessedInput) {
         do {
             character = fgetc(file_pointer);
             if(character == '\0'){
-                fprintf(stderr, "\n%d: <Contains NUll byte>: %s\n", curLine, line);
-                exit(EXIT_FAILURE); // fix me: add exit program
+                fprintf(stderr, "%d: <Contains NUll byte>: %s\n", curLine, line);
+                exit(1); // fix me: add exit program
             }
             line[index++] = (char) character;
         } while (character != '\n' && character != EOF && index < MAX_SIZE);
 
         if (index >= MAX_SIZE) {
-            fprintf(stderr, "\n%d: <Over the maximum line length %d>: %s\n", curLine, MAX_SIZE, line);
+            fprintf(stderr, "%d: <Over the maximum line length %d>: %s\n", curLine, MAX_SIZE, line);
             free(line);
-            exit(EXIT_FAILURE);
+            exit(1);
         } else {
             line[index - 1] = '\0';
         }
@@ -73,11 +73,11 @@ void reader(struct_input unprocessedInput) {
             token = strtok(line, "\t");
             if(!token){
                 fprintf(stderr, "\n%d: <Not begin with tab>: %s\n", curLine, line);
-                exit(EXIT_FAILURE);
+                exit(1);
             }
             if (node == NULL) {
                 fprintf(stderr, "\n%d: <Error>: %s\n", curLine, line); //fix me: not sure the error message
-                exit(EXIT_FAILURE);
+                exit(1);
             } else {
                 if (node->commands) {
                     appendToLL(node->commands, token);
@@ -100,7 +100,7 @@ void reader(struct_input unprocessedInput) {
             // Line which is not comment, target or command
             if (!token) {
                 fprintf(stderr, "%d: <Not target>: %s\n", curLine, line);
-                exit(EXIT_FAILURE);
+                exit(1);
             }
 
             char *targetName = malloc(sizeof(char) * MAX_SIZE);
@@ -139,7 +139,7 @@ void reader(struct_input unprocessedInput) {
 
     if(curNode == 0){
         fprintf(stderr, "537make: <no target> stop the program.\n");
-        exit(EXIT_FAILURE);
+        exit(1);
     }
 
     createConnections(graph, curNode);
@@ -147,7 +147,7 @@ void reader(struct_input unprocessedInput) {
 
     if (cycleExist) {
         fprintf(stderr, "\n<Cyclic dependency exists>: Terminate the program.\n");
-        exit(EXIT_FAILURE);
+        exit(1);
     }
 
     if(unprocessedInput.targets_to_build[0] == NULL){
@@ -180,7 +180,7 @@ void reader(struct_input unprocessedInput) {
 
     if (fclose(file_pointer)) {
         fprintf(stderr, "Fail to close makefile or Makefile.");
-        exit(EXIT_FAILURE);
+        exit(1);
     }
 }
 

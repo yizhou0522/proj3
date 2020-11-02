@@ -67,7 +67,7 @@ bool commandExecutionRequired(graph_node* root) {
                     // Dependency file does not exists - THROW ERROR
                     fprintf(stderr, "537make: *** No rule to make target '%s', needed by '%s'.  Stop.\n",
                             dependencies->element, root->element);
-                    exit(EXIT_FAILURE);
+                    exit(1);
                 } else {
                     fstat(fileno(dependencyPointer), &dependencyStat);
                     fclose(dependencyPointer);
@@ -96,7 +96,7 @@ bool executeNodeCommands(graph_node* root) {
             pid_t pid = fork();
             if (pid == -1) { // Error, failed to fork()
                 fprintf(stderr, "Failed to fork(). Terminating at once.\n");
-                exit(EXIT_FAILURE);
+                exit(1);
             }
 
             else if (pid > 0) { // Parent process
@@ -106,7 +106,7 @@ bool executeNodeCommands(graph_node* root) {
 
                     fprintf(stderr, "537make: recipe for target '%s' failed\n", root->element);
                     fprintf(stderr, "537make: *** [%s] Error %d\n", root->element, status);
-                    exit(EXIT_FAILURE);
+                    exit(1);
                 }
                 temphead = temphead->next;
             }
@@ -150,7 +150,7 @@ bool executeNodeCommands(graph_node* root) {
 
                 if (argv[0] == NULL) {
                     fprintf(stderr, "NULL passed as a command for execution\n");
-                    exit(EXIT_FAILURE);
+                    exit(1);
                 }
 
                 if (inputRedirection) {
@@ -179,7 +179,7 @@ bool executeNodeCommands(graph_node* root) {
                 // The exec() functions only return if an error has occurred.
                 // The return value is -1, and errno is set to indicate the error.
 
-                exit(EXIT_FAILURE);
+                exit(1);
             }
 
             else { // IMPOSSIBLE ZONE

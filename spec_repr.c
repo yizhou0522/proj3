@@ -13,7 +13,7 @@ linked_list_node *createLLNode(char *element) {
     linked_list_node* llNode = (linked_list_node *) malloc(sizeof(linked_list_node));
 
     if(!llNode){
-        fprintf(stderr, "Could not allocate memory for LinkedList data");
+        fprintf(stderr, "Could not allocate memory for LinkedList data\n");
         exit(1);
     }
 
@@ -26,7 +26,7 @@ linked_list_node *createLLNode(char *element) {
 void appendToLL(linked_list_node *node, char *element) {
 
     if (node == NULL) {
-        fprintf(stderr, "Null node passed to appendToLL function");
+        fprintf(stderr, "Null node passed to appendToLL function\n");
         exit(1);
     }
 
@@ -44,11 +44,11 @@ void appendToLL(linked_list_node *node, char *element) {
 
 void validateTarget(char *line, unsigned int size, int lineNo) {
     if (size == 0) {
-        fprintf(stderr, "%d Invalid line : %s", lineNo, line);
+        fprintf(stderr, "%d <Invalid index> : %s", lineNo, line);
         exit(1);
     }
     if (line[0] == ' ') {
-        fprintf(stderr, "%d Invalid line : %s", lineNo, line);
+        fprintf(stderr, "%d <No tab at the start of command line> : %s\n", lineNo, line);
         exit(1);
     }
     int countColon = 0;
@@ -62,23 +62,23 @@ void validateTarget(char *line, unsigned int size, int lineNo) {
         } else{
             // a b : d e f <= To fail these cases
             if(countSpace > 0 && countColon == 0){
-                fprintf(stderr, "%d Invalid line : %s", lineNo, line);
+                fprintf(stderr, "%d <No colon after the target> : %s\n", lineNo, line);
                 exit(1);
             }
             // If target name is missing
             if(countColon > 0 && countChar == 0){
-                fprintf(stderr, "%d Invalid line : %s", lineNo, line);
+                fprintf(stderr, "%d <Target name missing> : %s\n", lineNo, line);
                 exit(1);
             }
             countChar++;
         }
     }
     if(countChar == 0){
-        fprintf(stderr, "%d Invalid line : %s", lineNo, line);
+        fprintf(stderr, "%d <Invalid line3> : %s\n", lineNo, line);
         exit(1);
     }
     if (countColon != 1) {
-        fprintf(stderr, "%d Invalid line : %s", lineNo, line);
+        fprintf(stderr, "%d <No colon after the target> : %s\n", lineNo, line);
         exit(1);
     }
 }
@@ -98,7 +98,7 @@ char *stripWhiteSpace(char *str) {
 
 void validateCommands(char *line, unsigned int size, int lineNo) {
     if (size == 0) {
-        fprintf(stderr, "%d Invalid line : %s", lineNo, line);
+        fprintf(stderr, "%d <Invalid index> : %s\n", lineNo, line);
         exit(1);
     }
     int countTab = 0;
@@ -108,7 +108,7 @@ void validateCommands(char *line, unsigned int size, int lineNo) {
     }
 
     if(countTab != 1){
-        fprintf(stderr, "%d Invalid line : %s", lineNo, line);
+        fprintf(stderr, "%d <No tab start in command line> : %s\n", lineNo, line);
         exit(1);
     }
 }

@@ -12,7 +12,8 @@
 #define MAX_SIZE 2048
 
 
-graph_node* createGraphNode(char *element, linked_list_node* dependencies, linked_list_node* commands) {
+graph_node* createGraphNode(char *element, linked_list_node* dependencies, 
+linked_list_node* commands) {
 
     graph_node* graphNode = (graph_node *) malloc(sizeof(graph_node));
 
@@ -58,7 +59,7 @@ graph_node* createConnections(graph_node* graphArray[], unsigned int size){
             if(isfile == 0 && isTraget == 0){
                 printf("537make: *** No rule to make target '%s', needed by '%s'.  Stop.\n",
                        llNode->element, graphArray[i]->element);
-                exit(EXIT_FAILURE);
+                exit(1);
             }
             llNode = llNode->next;
         }
