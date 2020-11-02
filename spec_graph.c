@@ -38,18 +38,18 @@ graph_node* createConnections(graph_node* graphArray[], unsigned int size){
         if(!root){
             root = graphArray[i];
         }
-        dep_node *llNode = graphArray[i]->dependencies;
+        dep_node *depNode = graphArray[i]->dependencies;
         int currChildCount = 0;
-        while(llNode){
+        while(depNode){
             int isfile = 0;
             int isTraget = 0;
-            FILE *dependencyPointer = fopen(llNode->element, "r");
+            FILE *dependencyPointer = fopen(depNode->element, "r");
             if (dependencyPointer) {
                 isfile = 1;
                 fclose(dependencyPointer);
             }
              for (unsigned int j = 0; j < size; j++) {
-                    if (strcmp(llNode->element, graphArray[j]->element) == 0) {
+                    if (strcmp(depNode->element, graphArray[j]->element) == 0) {
                         graphArray[i]->children[currChildCount++] = graphArray[j];
                         isTraget = 1;
                         break;
@@ -58,10 +58,10 @@ graph_node* createConnections(graph_node* graphArray[], unsigned int size){
 
             if(isfile == 0 && isTraget == 0){
                 printf("537make: *** No rule to make target '%s', needed by '%s'.  Stop.\n",
-                       llNode->element, graphArray[i]->element);
+                       depNode->element, graphArray[i]->element);
                 exit(1);
             }
-            llNode = llNode->next;
+            depNode = depNode->next;
         }
     }
     return root;
@@ -105,7 +105,7 @@ int is_cycle_found(unsigned int graphSize, graph_node *graphNodeArray[]){
     return 0;
 }
 
-struct_input get_default_input_arg() {
+struct_input init_input() {
 
     struct_input defaultInputArg;
     defaultInputArg.make_file_name = NULL;

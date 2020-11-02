@@ -18,5 +18,5 @@
 #include "prog_exec.h"
 #endif
 
-void reader(struct_input unprocessedInput);
+void parser(struct_input unprocessedInput);
 

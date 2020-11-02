@@ -10,19 +10,17 @@
 #endif //INC_537MAKE_VALIDATOR_H
 
 
-void validateTarget(char *line, unsigned int size, int lineNo);
+void checkTarget(char *line, unsigned int size, int lineNo);
 
-char *stripWhiteSpace(char *str);
+char *deleteSpace(char *str);
 
-void validateCommands(char *line, unsigned int size, int lineNo);
+void checkCmd(char *line, unsigned int size, int lineNo);
 
-typedef struct llnode {
+typedef struct depNode {
     char* element;
-    struct llnode* next;
+    struct depNode* next;
 } dep_node;
 
-dep_node *createLLNode(char *element);
+dep_node *create(char *element);
 
-void appendToLL(dep_node *node, char *element);
-
-dep_node *getElement(dep_node *node, int index);
+void add(dep_node *node, char *element);

@@ -43,5 +43,5 @@ typedef struct struct_input {
 
 } struct_input;
 
-struct_input get_default_input_arg();
+struct_input init_input();
 

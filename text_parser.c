@@ -8,7 +8,7 @@
 #define MAX 2048
 
 
-void reader(struct_input unprocessedInput) {
+void parser(struct_input unprocessedInput) {
     FILE *file_pointer;
     char *line = (char *) malloc(MAX * sizeof(char));
 
@@ -68,7 +68,7 @@ void reader(struct_input unprocessedInput) {
 
         if (line[0] == '\t') {
             // Commands
-            validateCommands(line, index, curLine);
+            checkCmd(line, index, curLine);
 
             token = strtok(line, "\t");
             if(!token){
@@ -80,9 +80,9 @@ void reader(struct_input unprocessedInput) {
                 exit(1);
             } else {
                 if (node->commands) {
-                    appendToLL(node->commands, token);
+                    add(node->commands, token);
                 } else {
-                    dep_node *llNode = createLLNode(token);
+                    dep_node *llNode = create(token);
                     node->commands = llNode;
                 }
             }
@@ -93,7 +93,7 @@ void reader(struct_input unprocessedInput) {
             line = (char *) malloc(MAX * sizeof(char));
             continue;
         } else {
-            validateTarget(line, index, curLine);
+            checkTarget(line, index, curLine);
             // Now check if it's a target or not
 
             token = strtok(line, ":");
@@ -106,7 +106,9 @@ void reader(struct_input unprocessedInput) {
             char *targetName = malloc(sizeof(char) * MAX);
 
             strncpy(targetName, token, MAX);
-            targetName = stripWhiteSpace(targetName);
+
+
+            targetName = deleteSpace(targetName);
 
             token = strtok(NULL, " ");
 
@@ -119,10 +121,10 @@ void reader(struct_input unprocessedInput) {
                 if (strlen(token) > 0) {
                     height++;
                     if (!node->dependencies) {
-                        dep_node *llNode = createLLNode(token);
+                        dep_node *llNode = create(token);
                         node->dependencies = llNode;
                     } else {
-                        appendToLL(node->dependencies, token);
+                        add(node->dependencies, token);
                     }
                 }
 

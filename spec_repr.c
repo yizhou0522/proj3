@@ -8,29 +8,29 @@
 #include "spec_repr.h"
 #define MAX 2048
 
-dep_node *createLLNode(char *element) {
+dep_node *create(char *element) {
 
-    dep_node* llNode = (dep_node *) malloc(sizeof(dep_node));
+    dep_node* depNode = (dep_node *) malloc(sizeof(dep_node));
 
-    if(!llNode){
+    if(!depNode){
         fprintf(stderr, "Could not allocate memory for LinkedList data\n");
         exit(1);
     }
 
-    llNode->element = malloc(MAX * sizeof(char));
-    strncpy(llNode->element, element, MAX);
-    llNode->next = NULL;
-    return llNode;
+    depNode->element = malloc(MAX * sizeof(char));
+    strncpy(depNode->element, element, MAX);
+    depNode->next = NULL;
+    return depNode;
 }
 
-void appendToLL(dep_node *node, char *element) {
+void add(dep_node *node, char *element) {
 
     if (node == NULL) {
-        fprintf(stderr, "Null node passed to appendToLL function\n");
+        fprintf(stderr, "Null node passed to add function\n");
         exit(1);
     }
 
-    dep_node* newNode = createLLNode(element);
+    dep_node* newNode = create(element);
 
     dep_node* tempHead = node;
     while (tempHead -> next != NULL) {
@@ -42,7 +42,7 @@ void appendToLL(dep_node *node, char *element) {
 }
 
 
-void validateTarget(char *line, unsigned int size, int lineNo) {
+void checkTarget(char *line, unsigned int size, int lineNo) {
     if (size == 0) {
         fprintf(stderr, "%d <Invalid index> : %s", lineNo, line);
         exit(1);
@@ -83,7 +83,7 @@ void validateTarget(char *line, unsigned int size, int lineNo) {
     }
 }
 
-char *stripWhiteSpace(char *str) {
+char *deleteSpace(char *str) {
     char *newStr = malloc(MAX * sizeof(char));
     int i = 0;
     while (*str != '\0') {
@@ -96,7 +96,7 @@ char *stripWhiteSpace(char *str) {
     return newStr;
 }
 
-void validateCommands(char *line, unsigned int size, int lineNo) {
+void checkCmd(char *line, unsigned int size, int lineNo) {
     if (size == 0) {
         fprintf(stderr, "%d <Invalid index> : %s\n", lineNo, line);
         exit(1);

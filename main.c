@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
     bool fileFind = false;
     int option;
 
-    struct_input input = get_default_input_arg();
+    struct_input input = init_input();
 
     while ((option = getopt(argc, argv, "f:")) != -1) {
 
@@ -45,6 +45,6 @@ int main(int argc, char *argv[]) {
     }
 
     // struct_input unprocessedInput = parse_and_get_unprocessed_input(argc, argv);
-    reader(input);
+    parser(input);
 
 }
