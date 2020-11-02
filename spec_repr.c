@@ -74,7 +74,7 @@ void validateTarget(char *line, unsigned int size, int lineNo) {
         }
     }
     if(countChar == 0){
-        fprintf(stderr, "%d <Invalid line3> : %s\n", lineNo, line);
+        fprintf(stderr, "%d <No colon after the target> : %s\n", lineNo, line);
         exit(1);
     }
     if (countColon != 1) {

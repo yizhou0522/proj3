@@ -57,7 +57,7 @@ void reader(struct_input unprocessedInput) {
         } while (character != '\n' && character != EOF && index < MAX_SIZE);
 
         if (index >= MAX_SIZE) {
-            fprintf(stderr, "%d: <Over the maximum line length %d>: %s\n", curLine, MAX_SIZE, line);
+            fprintf(stderr, "%d: <Exceeds the max line number %d>: %s\n", curLine, MAX_SIZE, line);
             free(line);
             exit(1);
         } else {
@@ -146,7 +146,7 @@ void reader(struct_input unprocessedInput) {
     int cycleExist = is_cycle_found(curNode, graph);
 
     if (cycleExist) {
-        fprintf(stderr, "\n<Cyclic dependency exists>: Terminate the program.\n");
+        fprintf(stderr, "\n <Cycle detected>: Exit the program.\n");
         exit(1);
     }
 

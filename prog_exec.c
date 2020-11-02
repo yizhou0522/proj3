@@ -183,8 +183,8 @@ bool executeNodeCommands(graph_node* root) {
             }
 
             else { // IMPOSSIBLE ZONE
-                fprintf(stderr, "PID can not be negative. Terminating at once.");
-                _exit(EXIT_SUCCESS);
+                fprintf(stderr, "PID can not be negative. Exiting now..");
+                _exit(0);
             }
         }
 
