@@ -9,6 +9,9 @@
 #include <stdbool.h>
 #include "graph.h"
 
+#define MAX_SIZE 2048
+
+
 graph_node* createGraphNode(char *element, linked_list_node* dependencies, linked_list_node* commands) {
 
     graph_node* graphNode = (graph_node *) malloc(sizeof(graph_node));
@@ -99,5 +102,14 @@ int is_cycle_found(unsigned int graphSize, graph_node *graphNodeArray[]){
         }
     }
     return 0;
+}
+
+struct_input get_default_input_arg() {
+
+    struct_input defaultInputArg;
+    defaultInputArg.make_file_name = NULL;
+    defaultInputArg.targets_to_build = (char **) malloc(MAX_SIZE * sizeof(char *));
+    defaultInputArg.targets_to_build[0] = NULL;
+    return defaultInputArg;
 }
 

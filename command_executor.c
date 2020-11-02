@@ -16,6 +16,24 @@
 #include <fcntl.h>
 #include "command_executor.h"
 
+#define MAX_SIZE 2048
+
+bool traverseAndExecute(graph_node* root) {
+
+    if (root->children[0] == NULL) {
+        return executeNodeCommands(root);
+    }
+
+    for (unsigned int i = 0; i < MAX_SIZE; ++i) {
+        if (root->children[i] == NULL) {
+            break;
+        }
+        traverseAndExecute(root->children[i]);
+    }
+
+    return executeNodeCommands(root);
+}
+
 bool isLHSLessThanRHS(struct timespec lhs, struct timespec rhs) {
 
     if (lhs.tv_sec == rhs.tv_sec)

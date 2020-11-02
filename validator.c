@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "validator.h"
+#define MAX_SIZE 2048
 
 void validateTarget(char *line, unsigned int size, int lineNo) {
     if (size == 0) {

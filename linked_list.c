@@ -7,7 +7,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "linked_list.h"
-#include "constants.h"
+
+#define MAX_SIZE 2048
 
 linked_list_node *createLLNode(char *element) {
 
