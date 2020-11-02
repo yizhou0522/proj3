@@ -175,7 +175,6 @@ bool executeNodeCommands(graph_node* root) {
                     close(out);
                 }
 
-                // printf("%s\n", temphead->element);
                 execvp(argv[0], argv);
                 // The exec() functions only return if an error has occurred.
                 // The return value is -1, and errno is set to indicate the error.

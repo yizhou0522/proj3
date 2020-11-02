@@ -14,7 +14,7 @@ linked_list_node *createLLNode(char *element) {
 
     if(!llNode){
         fprintf(stderr, "Could not allocate memory for LinkedList data");
-        exit(EXIT_FAILURE);
+        exit(1);
     }
 
     llNode->element = malloc(MAX_SIZE * sizeof(char));
@@ -27,7 +27,7 @@ void appendToLL(linked_list_node *node, char *element) {
 
     if (node == NULL) {
         fprintf(stderr, "Null node passed to appendToLL function");
-        exit(EXIT_FAILURE);
+        exit(1);
     }
 
     linked_list_node* newNode = createLLNode(element);
@@ -45,11 +45,11 @@ void appendToLL(linked_list_node *node, char *element) {
 void validateTarget(char *line, unsigned int size, int lineNo) {
     if (size == 0) {
         fprintf(stderr, "%d Invalid line : %s", lineNo, line);
-        exit(EXIT_FAILURE);
+        exit(1);
     }
     if (line[0] == ' ') {
         fprintf(stderr, "%d Invalid line : %s", lineNo, line);
-        exit(EXIT_FAILURE);
+        exit(1);
     }
     int countColon = 0;
     int countSpace = 0;
@@ -63,23 +63,23 @@ void validateTarget(char *line, unsigned int size, int lineNo) {
             // a b : d e f <= To fail these cases
             if(countSpace > 0 && countColon == 0){
                 fprintf(stderr, "%d Invalid line : %s", lineNo, line);
-                exit(EXIT_FAILURE);
+                exit(1);
             }
             // If target name is missing
             if(countColon > 0 && countChar == 0){
                 fprintf(stderr, "%d Invalid line : %s", lineNo, line);
-                exit(EXIT_FAILURE);
+                exit(1);
             }
             countChar++;
         }
     }
     if(countChar == 0){
         fprintf(stderr, "%d Invalid line : %s", lineNo, line);
-        exit(EXIT_FAILURE);
+        exit(1);
     }
     if (countColon != 1) {
         fprintf(stderr, "%d Invalid line : %s", lineNo, line);
-        exit(EXIT_FAILURE);
+        exit(1);
     }
 }
 
@@ -99,7 +99,7 @@ char *stripWhiteSpace(char *str) {
 void validateCommands(char *line, unsigned int size, int lineNo) {
     if (size == 0) {
         fprintf(stderr, "%d Invalid line : %s", lineNo, line);
-        exit(EXIT_FAILURE);
+        exit(1);
     }
     int countTab = 0;
     for (unsigned int i = 0; i < size; i++) {
@@ -109,6 +109,6 @@ void validateCommands(char *line, unsigned int size, int lineNo) {
 
     if(countTab != 1){
         fprintf(stderr, "%d Invalid line : %s", lineNo, line);
-        exit(EXIT_FAILURE);
+        exit(1);
     }
 }

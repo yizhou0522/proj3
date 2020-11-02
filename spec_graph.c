@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
-#include "graph.h"
+#include "spec_graph.h"
 
 #define MAX_SIZE 2048
 

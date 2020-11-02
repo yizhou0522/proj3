@@ -4,7 +4,7 @@
 #include <ctype.h>
 #include <stdbool.h>
 #include <unistd.h>
-#include "reader.h"
+#include "text_parser.h"
 
 int main(int argc, char *argv[]) {
 
@@ -18,7 +18,6 @@ int main(int argc, char *argv[]) {
         switch (option) {
 
             case 'f':
-                
                 if(fileFind){
                     input.make_file_name = optarg;
                 }
