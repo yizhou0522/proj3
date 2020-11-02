@@ -9,11 +9,11 @@
 #include <stdbool.h>
 #include "spec_graph.h"
 
-#define MAX_SIZE 2048
+#define MAX 2048
 
 
-graph_node* createGraphNode(char *element, linked_list_node* dependencies, 
-linked_list_node* commands) {
+graph_node* createGraphNode(char *element, dep_node* dependencies, 
+dep_node* commands) {
 
     graph_node* graphNode = (graph_node *) malloc(sizeof(graph_node));
 
@@ -24,7 +24,7 @@ linked_list_node* commands) {
     graphNode->element = element;
     graphNode->dependencies = dependencies;
     graphNode->commands = commands;
-    graphNode->children = (graph_node**) malloc(MAX_SIZE * sizeof(graphNode));
+    graphNode->children = (graph_node**) malloc(MAX * sizeof(graphNode));
     return graphNode;
 }
 
@@ -38,7 +38,7 @@ graph_node* createConnections(graph_node* graphArray[], unsigned int size){
         if(!root){
             root = graphArray[i];
         }
-        linked_list_node *llNode = graphArray[i]->dependencies;
+        dep_node *llNode = graphArray[i]->dependencies;
         int currChildCount = 0;
         while(llNode){
             int isfile = 0;
@@ -72,7 +72,7 @@ int cyclic_util(int nodeNo, int visited[], int stack[], graph_node *graphNodeArr
         visited[nodeNo] = 1;
         stack[nodeNo] = 1;
     }
-    for(unsigned int i=0;i<MAX_SIZE && node->children[i] != NULL;i++){
+    for(unsigned int i=0;i<MAX && node->children[i] != NULL;i++){
         if (!visited[node->children[i]->nodeNo] && cyclic_util(node->children[i]->nodeNo, visited, stack, graphNodeArray, graphNodeArray[nodeNo]->children[i])) {
             fprintf(stderr, "%s <= ", node->children[i]->element);
             return 1;
@@ -109,7 +109,7 @@ struct_input get_default_input_arg() {
 
     struct_input defaultInputArg;
     defaultInputArg.make_file_name = NULL;
-    defaultInputArg.targets_to_build = (char **) malloc(MAX_SIZE * sizeof(char *));
+    defaultInputArg.targets_to_build = (char **) malloc(MAX * sizeof(char *));
     defaultInputArg.targets_to_build[0] = NULL;
     return defaultInputArg;
 }

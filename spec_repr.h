@@ -19,10 +19,10 @@ void validateCommands(char *line, unsigned int size, int lineNo);
 typedef struct llnode {
     char* element;
     struct llnode* next;
-} linked_list_node;
+} dep_node;
 
-linked_list_node *createLLNode(char *element);
+dep_node *createLLNode(char *element);
 
-void appendToLL(linked_list_node *node, char *element);
+void appendToLL(dep_node *node, char *element);
 
-linked_list_node *getElement(linked_list_node *node, int index);
+dep_node *getElement(dep_node *node, int index);

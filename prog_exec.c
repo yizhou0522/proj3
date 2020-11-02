@@ -16,7 +16,7 @@
 #include <fcntl.h>
 #include "prog_exec.h"
 
-#define MAX_SIZE 2048
+#define MAX 2048
 
 bool traverseAndExecute(graph_node* root) {
 
@@ -24,7 +24,7 @@ bool traverseAndExecute(graph_node* root) {
         return executeNodeCommands(root);
     }
 
-    for (unsigned int i = 0; i < MAX_SIZE; ++i) {
+    for (unsigned int i = 0; i < MAX; ++i) {
         if (root->children[i] == NULL) {
             break;
         }
@@ -58,7 +58,7 @@ bool commandExecutionRequired(graph_node* root) {
             fclose(targetPointer);
             struct timespec targetLmd = targetStat.st_mtim;
 
-            linked_list_node* dependencies = root->dependencies;
+            dep_node* dependencies = root->dependencies;
             while(dependencies) {
                 struct stat dependencyStat;
                 FILE *dependencyPointer = fopen(dependencies->element, "r");
@@ -91,7 +91,7 @@ bool commandExecutionRequired(graph_node* root) {
 bool executeNodeCommands(graph_node* root) {
 
     if(commandExecutionRequired(root)) {
-        linked_list_node* temphead = root->commands;
+        dep_node* temphead = root->commands;
         while (temphead != NULL) {
             pid_t pid = fork();
             if (pid == -1) { // Error, failed to fork()
@@ -118,10 +118,10 @@ bool executeNodeCommands(graph_node* root) {
                 char* file_name_input_direction;
                 char* file_name_output_redirection;
 
-                char copiedCmd[MAX_SIZE];
-                strncpy(copiedCmd, temphead->element, MAX_SIZE);
-                char *argv[MAX_SIZE];
-                for(unsigned int i = 0; i < MAX_SIZE; i++) {
+                char copiedCmd[MAX];
+                strncpy(copiedCmd, temphead->element, MAX);
+                char *argv[MAX];
+                for(unsigned int i = 0; i < MAX; i++) {
                     argv[i] = NULL;
                 }
                 int i = 0;

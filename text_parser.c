@@ -5,19 +5,19 @@
 #include <stdbool.h>
 #include <unistd.h>
 #include "text_parser.h"
-#define MAX_SIZE 2048
+#define MAX 2048
 
 
 void reader(struct_input unprocessedInput) {
     FILE *file_pointer;
-    char *line = (char *) malloc(MAX_SIZE * sizeof(char));
+    char *line = (char *) malloc(MAX * sizeof(char));
 
     if (line == NULL) {
         fprintf(stderr, "Reader input buffer allocation of memory failed.");
         exit(1);
     }
 
-    graph_node *graph[MAX_SIZE];
+    graph_node *graph[MAX];
     if(unprocessedInput.make_file_name != NULL){
         file_pointer = fopen(unprocessedInput.make_file_name, "r");
         if(!file_pointer){
@@ -54,10 +54,10 @@ void reader(struct_input unprocessedInput) {
                 exit(1); // fix me: add exit program
             }
             line[index++] = (char) character;
-        } while (character != '\n' && character != EOF && index < MAX_SIZE);
+        } while (character != '\n' && character != EOF && index < MAX);
 
-        if (index >= MAX_SIZE) {
-            fprintf(stderr, "%d: <Exceeds the max line number %d>: %s\n", curLine, MAX_SIZE, line);
+        if (index >= MAX) {
+            fprintf(stderr, "%d: <Exceeds the max line number %d>: %s\n", curLine, MAX, line);
             free(line);
             exit(1);
         } else {
@@ -82,7 +82,7 @@ void reader(struct_input unprocessedInput) {
                 if (node->commands) {
                     appendToLL(node->commands, token);
                 } else {
-                    linked_list_node *llNode = createLLNode(token);
+                    dep_node *llNode = createLLNode(token);
                     node->commands = llNode;
                 }
             }
@@ -90,7 +90,7 @@ void reader(struct_input unprocessedInput) {
         } else if (line[0] == '#' || line[0] == '\0') {
             index = 0;
             free(line);
-            line = (char *) malloc(MAX_SIZE * sizeof(char));
+            line = (char *) malloc(MAX * sizeof(char));
             continue;
         } else {
             validateTarget(line, index, curLine);
@@ -103,9 +103,9 @@ void reader(struct_input unprocessedInput) {
                 exit(1);
             }
 
-            char *targetName = malloc(sizeof(char) * MAX_SIZE);
+            char *targetName = malloc(sizeof(char) * MAX);
 
-            strncpy(targetName, token, MAX_SIZE);
+            strncpy(targetName, token, MAX);
             targetName = stripWhiteSpace(targetName);
 
             token = strtok(NULL, " ");
@@ -119,7 +119,7 @@ void reader(struct_input unprocessedInput) {
                 if (strlen(token) > 0) {
                     height++;
                     if (!node->dependencies) {
-                        linked_list_node *llNode = createLLNode(token);
+                        dep_node *llNode = createLLNode(token);
                         node->dependencies = llNode;
                     } else {
                         appendToLL(node->dependencies, token);
@@ -131,7 +131,7 @@ void reader(struct_input unprocessedInput) {
         }
         index = 0;
         free(line);
-        line = (char *) malloc(MAX_SIZE * sizeof(char));
+        line = (char *) malloc(MAX * sizeof(char));
 
     } while (character != EOF);
 
@@ -156,7 +156,7 @@ void reader(struct_input unprocessedInput) {
             printf("537make: '%s' is up to date.\n", graph[0]->element);
         }
     } else {
-        for (unsigned int x = 0; x < MAX_SIZE; x++) {
+        for (unsigned int x = 0; x < MAX; x++) {
             if (unprocessedInput.targets_to_build[x] == NULL) {
                 break;
             }

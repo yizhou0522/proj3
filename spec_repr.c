@@ -6,33 +6,33 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "spec_repr.h"
-#define MAX_SIZE 2048
+#define MAX 2048
 
-linked_list_node *createLLNode(char *element) {
+dep_node *createLLNode(char *element) {
 
-    linked_list_node* llNode = (linked_list_node *) malloc(sizeof(linked_list_node));
+    dep_node* llNode = (dep_node *) malloc(sizeof(dep_node));
 
     if(!llNode){
         fprintf(stderr, "Could not allocate memory for LinkedList data\n");
         exit(1);
     }
 
-    llNode->element = malloc(MAX_SIZE * sizeof(char));
-    strncpy(llNode->element, element, MAX_SIZE);
+    llNode->element = malloc(MAX * sizeof(char));
+    strncpy(llNode->element, element, MAX);
     llNode->next = NULL;
     return llNode;
 }
 
-void appendToLL(linked_list_node *node, char *element) {
+void appendToLL(dep_node *node, char *element) {
 
     if (node == NULL) {
         fprintf(stderr, "Null node passed to appendToLL function\n");
         exit(1);
     }
 
-    linked_list_node* newNode = createLLNode(element);
+    dep_node* newNode = createLLNode(element);
 
-    linked_list_node* tempHead = node;
+    dep_node* tempHead = node;
     while (tempHead -> next != NULL) {
         tempHead = tempHead->next;
     }
@@ -84,7 +84,7 @@ void validateTarget(char *line, unsigned int size, int lineNo) {
 }
 
 char *stripWhiteSpace(char *str) {
-    char *newStr = malloc(MAX_SIZE * sizeof(char));
+    char *newStr = malloc(MAX * sizeof(char));
     int i = 0;
     while (*str != '\0') {
         if (*str != ' ') {

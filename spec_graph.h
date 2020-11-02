@@ -25,12 +25,12 @@ typedef struct graphNode {
     //TODO: Change it to target name
     char* element;
     int nodeNo;
-    linked_list_node* dependencies;
-    linked_list_node* commands;
+    dep_node* dependencies;
+    dep_node* commands;
     struct graphNode** children;
 } graph_node;
 
-graph_node* createGraphNode(char *element, linked_list_node* dependencies, linked_list_node* commands);
+graph_node* createGraphNode(char *element, dep_node* dependencies, dep_node* commands);
 
 graph_node* createConnections(graph_node* graphArray[], unsigned int size);
 
