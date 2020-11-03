@@ -36,12 +36,12 @@ bool processGraph(graph_node* root) {
     return processNode(root);
 }
 
-bool checkTime(struct timespec lhs, struct timespec rhs) {
+bool checkTime(struct timespec timespec_1, struct timespec timespec_2) {
 
-    if (lhs.tv_sec == rhs.tv_sec)
-        return lhs.tv_nsec < rhs.tv_nsec;
+    if (timespec_1.tv_sec == timespec_2.tv_sec)
+        return timespec_1.tv_nsec < timespec_2.tv_nsec;
     else
-        return lhs.tv_sec < rhs.tv_sec;
+        return timespec_1.tv_sec < timespec_2.tv_sec;
 }
 
 bool checkExecution(graph_node* root) {
@@ -49,7 +49,7 @@ bool checkExecution(graph_node* root) {
     if(root->dependencies!= NULL) {
 
         struct stat targetStat;
-        FILE *fptr = fopen(root->element, "r");
+        FILE *fptr = fopen(root->value, "r");
 
         if (!fptr) {
             return true;
@@ -62,10 +62,10 @@ bool checkExecution(graph_node* root) {
             dep_node* dep = root->dependencies;
             while(dep) {
                 struct stat depStat;
-                FILE *depPtr = fopen(dep->element, "r");
+                FILE *depPtr = fopen(dep->value, "r");
                 if (!depPtr) {
-                    fprintf(stderr, "537make: No rule to make target '%s', needed by '%s'.  Stop.\n",
-                            dep->element, root->element);
+                    fprintf(stderr, "<537make: No rule to make target '%s', needed by '%s'. Exit.>\n",
+                            dep->value, root->value);
                     exit(1);
                 } else {
                     fstat(fileno(depPtr), &depStat);
@@ -97,8 +97,8 @@ bool processNode(graph_node* root) {
                 int status;
                 waitpid(pid, &status, 0);
                 if (status != 0) {
-                    fprintf(stderr, "537make: recipe for target '%s' failed\n", root->element);
-                    fprintf(stderr, "537make: *** [%s] Error %d\n", root->element, status);
+                    fprintf(stderr, "<537make: recipe for target '%s' failed>\n", root->value);
+                    fprintf(stderr, "<537make: *** [%s] Error %d>\n", root->value, status);
                     exit(1);
                 }
                 tmp = tmp->next;
@@ -111,7 +111,7 @@ bool processNode(graph_node* root) {
                 char* fOredir;
 
                 char copy[MAX];
-                strncpy(copy, tmp->element, MAX);
+                strncpy(copy, tmp->value, MAX);
                 char *argv[MAX];
                 for(unsigned int i = 0; i < MAX; i++) {
                     argv[i] = NULL;
@@ -141,7 +141,7 @@ bool processNode(graph_node* root) {
                 argv[i] = NULL;
 
                 if (argv[0] == NULL) {
-                    fprintf(stderr, "NULL passed as a command for execution\n");
+                    fprintf(stderr, "<NULL passed as a command for execution>\n");
                     exit(1);
                 }
 
@@ -175,7 +175,7 @@ bool processNode(graph_node* root) {
             }
 
             else { // IMPOSSIBLE ZONE
-                fprintf(stderr, "PID can not be negative. Exiting now..");
+                fprintf(stderr, "<PID can not be negative. Exit.>");
                 _exit(0);
             }
         }

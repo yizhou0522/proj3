@@ -19,12 +19,12 @@ int main(int argc, char *argv[]) {
 
             case 'f':
                 if(fileFind){
-                    ip.make_file_name = optarg;
+                    ip.name = optarg;
                 }
                 break;
 
             default: // Error Input Option
-                fprintf(stderr, "Error: Format shoud be %s [-f <file_name>]\n", argv[0]);
+                fprintf(stderr, "<Error: Format shoud be %s [-f <file_name>]>\n", argv[0]);
                 exit(EXIT_FAILURE);
         }
     }
@@ -38,10 +38,10 @@ int main(int argc, char *argv[]) {
 
         int j =0;
         for (; i < argc; ++i) {
-            ip.targets_to_build[j] = argv[i];
+            ip.spec_targets[j] = argv[i];
             j++;
         }
-        ip.targets_to_build[j] = NULL;
+        ip.spec_targets[j] = NULL;
     }
 
     parser(ip);

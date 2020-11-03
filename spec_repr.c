@@ -8,29 +8,29 @@
 #include "spec_repr.h"
 #define MAX 2048
 
-dep_node *create(char *element) {
+dep_node *create(char *value) {
 
     dep_node* depNode = (dep_node *) malloc(sizeof(dep_node));
 
     if(!depNode){
-        fprintf(stderr, "Could not allocate memory for dependencylist \n");
+        fprintf(stderr, "<Could not allocate memory for dependencylist> \n");
         exit(1);
     }
 
-    depNode->element = malloc(MAX * sizeof(char));
-    strncpy(depNode->element, element, MAX);
+    depNode->value = malloc(MAX * sizeof(char));
+    strncpy(depNode->value, value, MAX);
     depNode->next = NULL;
     return depNode;
 }
 
-void add(dep_node *node, char *element) {
+void add(dep_node *node, char *value) {
 
     if (node == NULL) {
-        fprintf(stderr, "Null node passed to add function\n");
+        fprintf(stderr, "<Null node passed to add function>\n");
         exit(1);
     }
 
-    dep_node* newNode = create(element);
+    dep_node* newNode = create(value);
 
     dep_node* tempHead = node;
     while (tempHead -> next != NULL) {

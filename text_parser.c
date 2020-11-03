@@ -8,20 +8,20 @@
 #define MAX 2048
 
 
-void parser(input unprocessedInput) {
+void parser(input parser_input) {
     FILE *file_pointer;
     char *line = (char *) malloc(MAX * sizeof(char));
 
     if (line == NULL) {
-        fprintf(stderr, "Reader input buffer allocation of memory failed.");
+        fprintf(stderr, "<Reader input buffer allocation of memory failed.>");
         exit(1);
     }
 
     graph_node *graph[MAX];
-    if(unprocessedInput.make_file_name != NULL){
-        file_pointer = fopen(unprocessedInput.make_file_name, "r");
+    if(parser_input.name != NULL){
+        file_pointer = fopen(parser_input.name, "r");
         if(!file_pointer){
-            fprintf(stderr, "Failed to find %s", unprocessedInput.make_file_name);
+            fprintf(stderr, "<Failed to find %s>", parser_input.name);
             exit(1);
         }
     } else {
@@ -33,7 +33,7 @@ void parser(input unprocessedInput) {
             file_pointer = fopen("Makefile", "r");
             // If this also fails then throw error
             if (!file_pointer) {
-                fprintf(stderr, "Both makefile and Makefile do not exist");
+                fprintf(stderr, "<Both makefile and Makefile do not exist>");
                 exit(1);
             }
         }
@@ -152,29 +152,29 @@ void parser(input unprocessedInput) {
         exit(1);
     }
 
-    if(unprocessedInput.targets_to_build[0] == NULL){
+    if(parser_input.spec_targets[0] == NULL){
         bool processed = processGraph(graph[0]);
         if (!processed) {
-            printf("537make: '%s' is up to date.\n", graph[0]->element);
+            printf("537make: '%s' is up to date.\n", graph[0]->value);
         }
     } else {
         for (unsigned int x = 0; x < MAX; x++) {
-            if (unprocessedInput.targets_to_build[x] == NULL) {
+            if (parser_input.spec_targets[x] == NULL) {
                 break;
             }
             int targetFound = 0;
             for (unsigned int i = 0; i < curNode; i++) {
-                if (strcmp(graph[i]->element, unprocessedInput.targets_to_build[x]) == 0) {
+                if (strcmp(graph[i]->value, parser_input.spec_targets[x]) == 0) {
                     targetFound = 1;
                     bool processed = processGraph(graph[i]);
                     if (!processed) {
-                        printf("537make: '%s' is up to date.\n", graph[i]->element);
+                        printf("537make: '%s' is up to date.\n", graph[i]->value);
                     }
                     break;
                 }
             }
             if (!targetFound) {
-                fprintf(stderr, "Fail to find target %s", unprocessedInput.targets_to_build[x]);
+                fprintf(stderr, "Fail to find target %s", parser_input.spec_targets[x]);
             }
         }
     }

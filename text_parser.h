@@ -6,5 +6,5 @@
 
 #include "prog_exec.h"
 
-void parser(input unprocessedInput);
+void parser(input parser_input);
 

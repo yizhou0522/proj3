@@ -8,8 +8,8 @@
 
 
 typedef struct graphNode {
-    char* element;
-    int nodeNo;
+    char* value;
+    int num;
     dep_node* dependencies;
     dep_node* commands;
     struct graphNode** children;
@@ -23,8 +23,8 @@ int isCycle(unsigned int size, graph_node *graphNodeArray[]);
 
 typedef struct input {
 
-    char* make_file_name;
-    char** targets_to_build;
+    char* name;
+    char** spec_targets;
 
 } input;
 

@@ -8,10 +8,10 @@ char *deleteSpace(char *str);
 void checkCmd(char *line, unsigned int size, int lineNo);
 
 typedef struct depNode {
-    char* element;
+    char* value;
     struct depNode* next;
 } dep_node;
 
-dep_node *create(char *element);
+dep_node *create(char *value);
 
-void add(dep_node *node, char *element);
+void add(dep_node *node, char *value);
