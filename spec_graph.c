@@ -86,31 +86,34 @@ int cyclic_util(int nodeNo, int visited[], int stack[], graph_node *graphNodeArr
     return 0;
 }
 
-int isCycle(unsigned int graphSize, graph_node *graphNodeArray[]){
+int isCycle(unsigned int size, graph_node *graphNodeArray[]){
 
-    int visited[graphSize];
-    int stack[graphSize];
+    int visited[size];
+    int stack[size];
 
-    for(unsigned int i=0;i<graphSize;i++ ){
+    unsigned int i=0;
+    while(i<size){
         visited[i] = 0;
         stack[i] = 0;
+        i++;
     }
 
-    for(unsigned int i=0;i<graphSize;i++){
-        if(cyclic_util(graphNodeArray[i]->nodeNo, visited, stack, graphNodeArray, graphNodeArray[i])){
-            fprintf(stderr, " %s ", graphNodeArray[i]->element);
+    unsigned int j=0;
+    while(j<size){
+        if(cyclic_util(graphNodeArray[j]->nodeNo, visited, stack, graphNodeArray, graphNodeArray[j])){
+            fprintf(stderr, " %s ", graphNodeArray[j]->element);
             return 1;
         }
+        i++;
     }
     return 0;
 }
 
 input init_input() {
-
-    input defaultInputArg;
-    defaultInputArg.make_file_name = NULL;
-    defaultInputArg.targets_to_build = (char **) malloc(MAX * sizeof(char *));
-    defaultInputArg.targets_to_build[0] = NULL;
-    return defaultInputArg;
+    input inputStruct;
+    inputStruct.make_file_name = NULL;
+    inputStruct.targets_to_build = (char **) malloc(MAX * sizeof(char *));
+    inputStruct.targets_to_build[0] = NULL;
+    return inputStruct;
 }
 

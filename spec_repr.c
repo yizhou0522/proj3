@@ -13,7 +13,7 @@ dep_node *create(char *element) {
     dep_node* depNode = (dep_node *) malloc(sizeof(dep_node));
 
     if(!depNode){
-        fprintf(stderr, "Could not allocate memory for LinkedList data\n");
+        fprintf(stderr, "Could not allocate memory for dependencylist \n");
         exit(1);
     }
 
