@@ -20,15 +20,18 @@
 #define MAX 2048
 
 /*
- * This class contains method to create nodes and build graph. It also check is
+ * This class contains function to create nodes and build graph. It also check is
  * there cycle in a dependencies relationship.
  */
 
 /*
- * This method is used to create node in the graph and returns the pointer to
+ * This function is used to create node in the graph and returns the pointer to
  * the node.
  */
-graph_node* createGraphNode(char *value, dep_node* dependencies, 
+graph_node* createGraphNode(char *value, dep
+
+
+_node* dependencies, 
 dep_node* commands) {
 
     graph_node* graphNode = (graph_node *) malloc(sizeof(graph_node));
@@ -45,7 +48,7 @@ dep_node* commands) {
 }
 
 /*
- * This method is used to constrcut graph structure and returns the pointer to
+ * This function is used to constrcut graph structure and returns the pointer to
  * the graph.
  */
 graph_node* constructGraph(graph_node* graphArray[], unsigned int size){
@@ -70,14 +73,16 @@ graph_node* constructGraph(graph_node* graphArray[], unsigned int size){
             }
              for (unsigned int j = 0; j < size; j++) {
                     if (strcmp(depNode->value, graphArray[j]->value) == 0) {
-                        graphArray[i]->children[currChildCount++] = graphArray[j];
+                        graphArray[i]->
+                        children[currChildCount++] = graphArray[j];
                         isTraget = 1;
                         break;
                     }
                 }
 
             if(isfile == 0 && isTraget == 0){
-                printf("<537make: No rule to make target '%s', needed by '%s'.  Exit.>\n",
+                printf(
+             "<537make: No rule to make target '%s', needed by '%s'.  Exit.>\n",
                        depNode->value, graphArray[i]->value);
                 exit(1);
             }
@@ -88,15 +93,18 @@ graph_node* constructGraph(graph_node* graphArray[], unsigned int size){
 }
 
 /*
- * This is helper method of isCycle() method to check the present of any cycle.
+ * This is helper function of isCycle() function to check the present of any cycle.
  */
-int cyclic_util(int num, int visited[], int stack[], graph_node *graphNodeArray[], graph_node* node ){
+int cyclic_util(int num, int visited[], int stack[], 
+graph_node *graphNodeArray[], graph_node* node ){
     if(!visited[num]){
         visited[num] = 1;
         stack[num] = 1;
     }
     for(unsigned int i=0;i<MAX && node->children[i] != NULL;i++){
-        if (!visited[node->children[i]->num] && cyclic_util(node->children[i]->num, visited, stack, graphNodeArray, graphNodeArray[num]->children[i])) {
+        if (!visited[node->children[i]->num] && 
+        cyclic_util(node->children[i]->num, visited, stack, graphNodeArray, 
+        graphNodeArray[num]->children[i])) {
             fprintf(stderr, "%s <= ", node->children[i]->value);
             return 1;
         }
@@ -110,7 +118,7 @@ int cyclic_util(int num, int visited[], int stack[], graph_node *graphNodeArray[
 }
 
 /*
- * This method will print error message if cycle occurs in a dependence
+ * This function will print error message if cycle occurs in a dependence
  * relationship.
  */
 int isCycle(unsigned int size, graph_node *graphNodeArray[]){
@@ -127,7 +135,8 @@ int isCycle(unsigned int size, graph_node *graphNodeArray[]){
 
     unsigned int j=0;
     while(j<size){
-        if(cyclic_util(graphNodeArray[j]->num, visited, stack, graphNodeArray, graphNodeArray[j])){
+        if(cyclic_util(graphNodeArray[j]->num, visited, stack, 
+        graphNodeArray, graphNodeArray[j])){
             fprintf(stderr, " %s ", graphNodeArray[j]->value);
             return 1;
         }

@@ -23,7 +23,7 @@
  */
 
 /*
- * This method is used to create linked list node and returns the pointer to the
+ * This function is used to create linked list node and returns the pointer to the
  * new created node.
  */
 dep_node *create(char *value) {
@@ -42,7 +42,7 @@ dep_node *create(char *value) {
 }
 
 /*
- * This method is used to add nodes to the graph structure.
+ * This function is used to add nodes to the graph structure.
  */
 void add(dep_node *node, char *value) {
 
@@ -63,7 +63,7 @@ void add(dep_node *node, char *value) {
 }
 
 /*
- * This method check if the target executable file is valid. Print error
+ * This function check if the target executable file is valid. Print error
  * message when necessary.
  */
 void checkTarget(char *line, unsigned int size, int lineNo) {
@@ -72,7 +72,8 @@ void checkTarget(char *line, unsigned int size, int lineNo) {
         exit(1);
     }
     if (line[0] == ' ') {
-        fprintf(stderr, "%d <No tab at the start of command line> : %s\n", lineNo, line);
+        fprintf(stderr, "%d <No tab at the start of command line> : %s\n", 
+        lineNo, line);
         exit(1);
     }
     int countColon = 0;
@@ -85,11 +86,12 @@ void checkTarget(char *line, unsigned int size, int lineNo) {
             countSpace++;
         } else{
             if(countSpace > 0 && countColon == 0){
-                fprintf(stderr, "%d <No colon after the target> : %s\n", lineNo, line);
+                fprintf(stderr, "%d <No colon after the target> : %s\n", 
+                lineNo, line);
                 exit(1);
             }
             if(countColon > 0 && countChar == 0){
-                fprintf(stderr, "%d <Target name missing> : %s\n", lineNo, line);
+            fprintf(stderr, "%d <Target name missing> : %s\n", lineNo, line);
                 exit(1);
             }
             countChar++;
@@ -106,7 +108,7 @@ void checkTarget(char *line, unsigned int size, int lineNo) {
 }
 
 /*
- * This method delete the unnecessary space in a line
+ * This function delete the unnecessary space in a line
  */
 char *deleteSpace(char *str) {
     char *newStr = malloc(MAX * sizeof(char));
@@ -121,7 +123,7 @@ char *deleteSpace(char *str) {
 }
 
 /*
- * This method is used to check if the command arguments are valid.
+ * This function is used to check if the command arguments are valid.
  */
 void checkCmd(char *line, unsigned int size, int lineNo) {
     if (size == 0) {
@@ -135,7 +137,7 @@ void checkCmd(char *line, unsigned int size, int lineNo) {
     }
 
     if(countTab != 1){
-        fprintf(stderr, "%d <No tab start in command line> : %s\n", lineNo, line);
+    fprintf(stderr, "%d <No tab start in command line> : %s\n", lineNo, line);
         exit(1);
     }
 }
