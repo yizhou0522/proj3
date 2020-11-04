@@ -28,10 +28,7 @@
  * This function is used to create node in the graph and returns the pointer to
  * the node.
  */
-graph_node* createGraphNode(char *value, dep
-
-
-_node* dependencies, 
+graph_node* createGraphNode(char *value, dep_node* dependencies, 
 dep_node* commands) {
 
     graph_node* graphNode = (graph_node *) malloc(sizeof(graph_node));
