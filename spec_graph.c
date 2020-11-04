@@ -102,11 +102,11 @@ graph_node *graphNodeArray[], graph_node* node ){
         if (!visited[node->children[i]->num] && 
         cyclic_util(node->children[i]->num, visited, stack, graphNodeArray, 
         graphNodeArray[num]->children[i])) {
-            fprintf(stderr, "%s <= ", node->children[i]->value);
+            fprintf(stderr, "%s < ", node->children[i]->value);
             return 1;
         }
         else if (stack[node->children[i]->num]) {
-            fprintf(stderr, "%s <= ", node->children[i]->value);
+            fprintf(stderr, "%s < ", node->children[i]->value);
             return 1;
         }
     }
