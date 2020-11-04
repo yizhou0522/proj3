@@ -1,13 +1,31 @@
+////////////////////////////////////////////////////////////////////////////////
+// Main File:        (main.c)
+// This File:        (spec_repr.c)
+// Other Files:      (main.c, prog_exec.c, prog_exec.h, spec_graph.c,
+//                    spec_graph.h, spec_repr.h, text_parser.c, text_parser.h,
+//                    makefile)
 //
-// Created by Anshu on 11/3/18.
-// Co-author Anshu Verma
-//
+// Semester:         CS 537 Fall 2020
+// Instructor:       Barton Miller
+// Author:           (Yizhou Liu, Yixing TU)
+// Email:            (liu773@wisc.edu, ytu26@wisc.edu)
+// CS Login:         (yizhou, yixingt)
+////////////////////////////////////////////////////////////////////////////////
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "spec_repr.h"
 #define MAX 2048
 
+/*
+ * This class checkes the executable files and create linked list node if it is
+ * valid.
+ */
+
+/*
+ * This method is used to create linked list node and returns the pointer to the
+ * new created node.
+ */
 dep_node *create(char *value) {
 
     dep_node* depNode = (dep_node *) malloc(sizeof(dep_node));
@@ -23,6 +41,9 @@ dep_node *create(char *value) {
     return depNode;
 }
 
+/*
+ * This method is used to add nodes to the graph structure.
+ */
 void add(dep_node *node, char *value) {
 
     if (node == NULL) {
@@ -41,7 +62,10 @@ void add(dep_node *node, char *value) {
     newNode->next = NULL;
 }
 
-
+/*
+ * This method check if the target executable file is valid. Print error
+ * message when necessary.
+ */
 void checkTarget(char *line, unsigned int size, int lineNo) {
     if (size == 0) {
         fprintf(stderr, "%d <Invalid index> : %s", lineNo, line);
@@ -60,12 +84,10 @@ void checkTarget(char *line, unsigned int size, int lineNo) {
         } else if(line[i] == ' '){
             countSpace++;
         } else{
-            // a b : d e f <= To fail these cases
             if(countSpace > 0 && countColon == 0){
                 fprintf(stderr, "%d <No colon after the target> : %s\n", lineNo, line);
                 exit(1);
             }
-            // If target name is missing
             if(countColon > 0 && countChar == 0){
                 fprintf(stderr, "%d <Target name missing> : %s\n", lineNo, line);
                 exit(1);
@@ -83,6 +105,9 @@ void checkTarget(char *line, unsigned int size, int lineNo) {
     }
 }
 
+/*
+ * This method delete the unnecessary space in a line
+ */
 char *deleteSpace(char *str) {
     char *newStr = malloc(MAX * sizeof(char));
     int i = 0;
@@ -91,11 +116,13 @@ char *deleteSpace(char *str) {
             *(newStr + i++) = *str;
         }
         str++;
-
     }
     return newStr;
 }
 
+/*
+ * This method is used to check if the command arguments are valid.
+ */
 void checkCmd(char *line, unsigned int size, int lineNo) {
     if (size == 0) {
         fprintf(stderr, "%d <Invalid index> : %s\n", lineNo, line);

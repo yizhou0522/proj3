@@ -1,3 +1,16 @@
+////////////////////////////////////////////////////////////////////////////////
+// Main File:        (main.c)
+// This File:        (text_parser.c)
+// Other Files:      (main.c, prog_exec.c, prog_exec.h, spec_graph.c,
+//                    spec_graph.h, spec_repr.c, spec_repr.h, text_parser.h,
+//                    makefile)
+//
+// Semester:         CS 537 Fall 2020
+// Instructor:       Barton Miller
+// Author:           (Yizhou Liu, Yixing TU)
+// Email:            (liu773@wisc.edu, ytu26@wisc.edu)
+// CS Login:         (yizhou, yixingt)
+////////////////////////////////////////////////////////////////////////////////
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -7,7 +20,11 @@
 #include "text_parser.h"
 #define MAX 2048
 
-
+/*
+ * This class looks for and reads the makefile then parse the lines in the
+ * makefile. Also build the specification graph based on the dependences of the
+ * targets found in the makefile.
+ */
 void parser(input parser_input) {
     FILE *file_pointer;
     char *line = (char *) malloc(MAX * sizeof(char));
@@ -26,12 +43,10 @@ void parser(input parser_input) {
         }
     } else {
 
-        // Reading makefile
+        // Look for makefile then Makefile. If both are not present, print the error message.
         file_pointer = fopen("makefile", "r");
         if (!file_pointer) {
-            // In case readfile is not present. Trying reading Makefile
             file_pointer = fopen("Makefile", "r");
-            // If this also fails then throw error
             if (!file_pointer) {
                 fprintf(stderr, "<Both makefile and Makefile do not exist>");
                 exit(1);
@@ -41,17 +56,17 @@ void parser(input parser_input) {
     int curLine = 0;
     unsigned int curNode = 0;
     unsigned int index = 0;
-    // Read line by line the contents of the file
+
+    // Check each line in the makefile. Print error message when violation of makefile format occurs.
     graph_node *node = NULL;
     int character;
     do {
         curLine++;
-        // Concatente everything line;
         do {
             character = fgetc(file_pointer);
             if(character == '\0'){
                 fprintf(stderr, "%d: <Contains NUll byte>: %s\n", curLine, line);
-                exit(1); // fix me: add exit program
+                exit(1);
             }
             line[index++] = (char) character;
         } while (character != '\n' && character != EOF && index < MAX);
@@ -67,16 +82,14 @@ void parser(input parser_input) {
         char *token;
 
         if (line[0] == '\t') {
-            // Commands
             checkCmd(line, index, curLine);
-
             token = strtok(line, "\t");
             if(!token){
                 fprintf(stderr, "\n%d: <Not begin with tab>: %s\n", curLine, line);
                 exit(1);
             }
             if (node == NULL) {
-                fprintf(stderr, "\n%d: <Error>: %s\n", curLine, line); //fix me: not sure the error message
+                fprintf(stderr, "\n%d: <Error>: %s\n", curLine, line);
                 exit(1);
             } else {
                 if (node->commands) {
@@ -86,7 +99,6 @@ void parser(input parser_input) {
                     node->commands = llNode;
                 }
             }
-
         } else if (line[0] == '#' || line[0] == '\0') {
             index = 0;
             free(line);
@@ -94,28 +106,25 @@ void parser(input parser_input) {
             continue;
         } else {
             checkTarget(line, index, curLine);
-            // Now check if it's a target or not
 
             token = strtok(line, ":");
-            // Line which is not comment, target or command
             if (!token) {
                 fprintf(stderr, "%d: <Not target>: %s\n", curLine, line);
                 exit(1);
             }
 
-            char *targetName = malloc(sizeof(char) * MAX);
+            char *file = malloc(sizeof(char) * MAX);
 
-            strncpy(targetName, token, MAX);
+            strncpy(file, token, MAX);
 
-
-            targetName = deleteSpace(targetName);
+            file = deleteSpace(file);
 
             token = strtok(NULL, " ");
 
-            // New Target found. Create a new graph node.
-            node = createGraphNode(targetName, NULL, NULL);
+            node = createGraphNode(file, NULL, NULL);
             graph[curNode++] = node;
-
+            
+            //Build the dependencies between nodes
             int height = 0;
             while (token != NULL) {
                 if (strlen(token) > 0) {
@@ -144,6 +153,7 @@ void parser(input parser_input) {
         exit(1);
     }
 
+    //Build the graph
     constructGraph(graph, curNode);
     int cycleExist = isCycle(curNode, graph);
 
@@ -178,7 +188,6 @@ void parser(input parser_input) {
             }
         }
     }
-
 
     if (fclose(file_pointer)) {
         fprintf(stderr, "Fail to close makefile or Makefile.");

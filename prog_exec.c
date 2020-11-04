@@ -1,8 +1,16 @@
+////////////////////////////////////////////////////////////////////////////////
+// Main File:        (main.c)
+// This File:        (prog_exec.c)
+// Other Files:      (main.c, prog_exec.h, spec_graph.c, spec_graph.h,
+//                    spec_repr.c, spec_repr.h, text_parser.c, text_parser.h,
+//                    makefile)
 //
-// Created by Arpit Jain on 11/3/18.
-// Co-author Anshu Verma
-//
-
+// Semester:         CS 537 Fall 2020
+// Instructor:       Barton Miller
+// Author:           (Yizhou Liu, Yixing TU)
+// Email:            (liu773@wisc.edu, ytu26@wisc.edu)
+// CS Login:         (yizhou, yixingt)
+////////////////////////////////////////////////////////////////////////////////
 #include <stddef.h>
 #include <stdbool.h>
 #include <sys/types.h>
@@ -17,6 +25,11 @@
 #include "prog_exec.h"
 
 #define MAX 2048
+
+/*
+ * This class is used to create process, run each process, and wait for
+ * processes to complete.
+ */
 
 bool processGraph(graph_node* root) {
 
@@ -174,7 +187,7 @@ bool processNode(graph_node* root) {
                 exit(1);
             }
 
-            else { // IMPOSSIBLE ZONE
+            else {
                 fprintf(stderr, "<PID can not be negative. Exit.>");
                 _exit(0);
             }

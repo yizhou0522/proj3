@@ -1,0 +1,1 @@
+This is a simple version of the make command called 537make. It can be executed from a command line by reading and executing makefiles. It will build a specification graph based on the dependencies consisted in the makefile and traverses through the graph to execute files.

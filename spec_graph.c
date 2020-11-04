@@ -1,8 +1,16 @@
+////////////////////////////////////////////////////////////////////////////////
+// Main File:        (main.c)
+// This File:        (spec_graph.c)
+// Other Files:      (main.c, prog_exec.c, prog_exec.h, spec_graph.h,
+//                    spec_repr.c, spec_repr.h, text_parser.c, text_parser.h,
+//                    makefile)
 //
-// Created by Arpit Jain on 11/1/18.
-// Co-author Anshu Verma
-//
-
+// Semester:         CS 537 Fall 2020
+// Instructor:       Barton Miller
+// Author:           (Yizhou Liu, Yixing TU)
+// Email:            (liu773@wisc.edu, ytu26@wisc.edu)
+// CS Login:         (yizhou, yixingt)
+////////////////////////////////////////////////////////////////////////////////
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -11,14 +19,22 @@
 
 #define MAX 2048
 
+/*
+ * This class contains method to create nodes and build graph. It also check is
+ * there cycle in a dependencies relationship.
+ */
 
+/*
+ * This method is used to create node in the graph and returns the pointer to
+ * the node.
+ */
 graph_node* createGraphNode(char *value, dep_node* dependencies, 
 dep_node* commands) {
 
     graph_node* graphNode = (graph_node *) malloc(sizeof(graph_node));
 
     if(!graphNode){
-        fprintf(stderr, "<Could not allocate memory for dependencylist>");
+        fprintf(stderr, "<Could not allocate memory for dependency list>");
         exit(1);
     }
     graphNode->value = value;
@@ -28,6 +44,10 @@ dep_node* commands) {
     return graphNode;
 }
 
+/*
+ * This method is used to constrcut graph structure and returns the pointer to
+ * the graph.
+ */
 graph_node* constructGraph(graph_node* graphArray[], unsigned int size){
     graph_node *root = NULL;
 
@@ -67,6 +87,9 @@ graph_node* constructGraph(graph_node* graphArray[], unsigned int size){
     return root;
 }
 
+/*
+ * This is helper method of isCycle() method to check the present of any cycle.
+ */
 int cyclic_util(int num, int visited[], int stack[], graph_node *graphNodeArray[], graph_node* node ){
     if(!visited[num]){
         visited[num] = 1;
@@ -86,6 +109,10 @@ int cyclic_util(int num, int visited[], int stack[], graph_node *graphNodeArray[
     return 0;
 }
 
+/*
+ * This method will print error message if cycle occurs in a dependence
+ * relationship.
+ */
 int isCycle(unsigned int size, graph_node *graphNodeArray[]){
 
     int visited[size];
